@@ -22,16 +22,45 @@ int get_open_mode(t_element *elem)
         return (O_RDWR);
     if (!ft_strncmp(elem->token, "OUTFILE-APPEND", ft_strlen(elem->token)))
         return (O_RDWR | O_APPEND);
-    return (NULL);
+    return (0);
 }
 
 char *get_file_content(int fd)
 {
     char *res;
+    char *str;
     int bytes;
+    int fd2;
 
+    fd2 = dup(fd);
+    res = ft_calloc(1, 1);
     bytes = 1;
     while(bytes > 0)
-        bytes = read(fd, res, 1);
+    {
+        str = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+        bytes = read(fd2, str, BUFFER_SIZE);
+        res = ft_strjoin(res, str);
+        free(str);
+    }
+    close(fd2);
     return (res);
+}
+
+void ft_reopen_IO(t_exec *exec, int IO)
+{
+    if (IO == 1)
+    {
+        close(exec->infile);
+        exec->infile = open(".infile", O_RDWR);
+    }
+    else if (IO == 2)
+    {
+        close(exec->outfile);
+        exec->outfile = open(".outfile", O_RDWR);
+    }
+    else
+    {
+        printf("No IO file given\n");
+        return ;
+    }
 }

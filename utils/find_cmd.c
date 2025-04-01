@@ -15,6 +15,6 @@ char *get_cmd_name(char *path)
             res = ft_strdup(chunks[i]);
         i++;
     }
-    ft_free_tab(chunks);
+    free_tab(chunks);
     return (res);
 }

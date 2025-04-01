@@ -34,6 +34,7 @@
 # define OUT 2
 # define OUT_APPEND 3
 # define ERROR_CHAR "<>|&"
+# define BUFFER_SIZE 1000
 
 typedef struct s_element
 {
@@ -67,7 +68,7 @@ typedef struct s_cmd
 {
 	char 		*name;
 	char 		*path;
-	char		*delimit;
+	char		delimit;
 	int			is_builtin;
 	t_filenode 	*infiles;
 	t_filenode 	*outfiles;
@@ -81,6 +82,20 @@ typedef struct s_exec
 	int		infile;
 	int		outfile;
 }	t_exec;
+
+// ________________________EXEC__________________________
+
+// ----------------------EXEC CMD------------------------
+void    exec_line(t_exec *exec, t_list *list);
+void    exec_cmd(t_exec *exec);
+
+// ------------------------FORK--------------------------
+void    child_process(t_exec *exec);
+void    parent_process(pid_t pid);
+
+// -----------------------OUTPUT-------------------------
+void    display_output(t_exec *exec);
+
 
 
 // _______________________UTILS__________________________
@@ -98,6 +113,17 @@ int 	is_infile(t_element *elem);
 int 	is_outfile(t_element *elem);
 int 	get_open_mode(t_element *elem);
 char 	*get_file_content(int fd);
+void    ft_reopen_IO(t_exec *exec, int IO);
+
+// ----------------------FIND CMD------------------------
+char    *get_cmd_name(char *path);
+
+// ------------------------FREE--------------------------
+void    free_tab(char **tab);
+void    free_env(t_env **env);
+void    free_filenode(t_filenode *fnode);
+void    free_cmd(t_cmd *cmd);
+void    free_exec(t_exec *exec);
 
 // ------------------------INIT--------------------------
 t_exec 		*init_exec(char **envp);

@@ -22,6 +22,7 @@ void fill_args(t_list *list, t_exec *exec)
         currfd = open(currfile->name, currfile->open_mode);
         ft_putstr_fd(get_file_content(currfd), exec->infile);
         ft_putstr_fd(" ", exec->infile);
+        close(currfd);
         currfile = currfile->next;
     }
 }

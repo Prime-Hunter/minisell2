@@ -28,7 +28,8 @@ int	main(int argc, char **argv, char **envp)
         if (input)
         {
 		    minishell(input, liste);
-            afficherliste(liste);
+            //afficherliste(liste);
+            exec_line(exec, liste);
 		    destruction(liste);
         }
         else

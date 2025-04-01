@@ -3,6 +3,8 @@ CFLAGS = -Wall -Wextra -Werror -g
 CLIBS = -lreadline
 SRC =	main.c \
 		parsing/core.c parsing/find_list.c parsing/lst_utils.c parsing/parse.c parsing/utils.c \
+		exec/exec_cmd.c exec/fork.c exec/output.c \
+		utils/args.c utils/env.c utils/files.c utils/find_cmd.c utils/ft_free.c utils/init.c \
 
 OBJS = $(SRC:.c=.o)
 
